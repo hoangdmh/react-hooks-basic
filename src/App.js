@@ -13,9 +13,9 @@ const App = () => {
   })//Destructuring Assignment
 
   let [todos, setTodos] = useState([
-    { id: 1, title: 'Front-end' },
-    { id: 2, title: 'Reactjs' },
-    { id: 3, title: 'Vuejs' }
+    { id: 1, title: 'Front-end', status: true },
+    { id: 2, title: 'Reactjs', status: true },
+    { id: 3, title: 'Vuejs', status: false }
   ]);
 
   const handleClick = () => {
@@ -50,6 +50,8 @@ const App = () => {
         <img src={logo} className="App-logo" alt="logo" />
 
         <Todo todos={todos} />
+
+        <Todo todos={todos.filter(item => item.status === true)} />
 
         <input
           type="text" value={state.name} name='name'
