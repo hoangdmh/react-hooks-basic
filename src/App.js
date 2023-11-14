@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.scss';
 
 import Nav from './views/Nav';
+import Todo from './views/Todo';
 
 import { useState } from 'react';
 
@@ -48,18 +49,7 @@ const App = () => {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
 
-        <div>
-          <ol>
-            {todos && todos.length &&
-              todos.map(item => {
-                return (
-                  <li key={item.id}>{item.title}</li>
-                )
-              })
-            }
-          </ol>
-        </div>
-
+        <Todo todos={todos} />
 
         <input
           type="text" value={state.name} name='name'
