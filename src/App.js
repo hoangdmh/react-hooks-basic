@@ -14,7 +14,7 @@ const App = () => {
 
   let [todos, setTodos] = useState([
     { id: 1, title: 'Front-end', status: true },
-    { id: 2, title: 'Reactjs', status: true },
+    { id: 2, title: 'Reactjs', status: false },
     { id: 3, title: 'Vuejs', status: false }
   ]);
 
@@ -22,7 +22,8 @@ const App = () => {
     // console.log('handleClick', state.name);
     let data = {
       id: Math.floor(Math.random() * 1000),
-      title: state.name
+      title: state.name,
+      status: true
     }
     setTodos([
       ...todos,
@@ -43,13 +44,22 @@ const App = () => {
     });
   }
 
+  const handleDeleteTodo = (todo) => {
+    // console.log('handleDeleteTodo', todo);
+    todos = todos.filter(item => item.id !== todo.id);
+    setTodos(todos)
+  }
+
   return (
     <div className="App">
       <Nav />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
 
-        <Todo todos={todos} />
+        <Todo
+          handleDeleteTodo={handleDeleteTodo}//pass props function to component child
+          todos={todos}//pass props data
+        />
 
         <Todo todos={todos.filter(item => item.status === true)} />
 
