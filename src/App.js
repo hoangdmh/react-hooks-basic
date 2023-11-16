@@ -3,8 +3,15 @@ import './App.scss';
 
 import Nav from './views/Nav';
 import Todo from './views/Todo';
+import User from './views/User';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
 const App = () => {
   let [state, setState] = useState({
@@ -50,26 +57,48 @@ const App = () => {
     setTodos(todos)
   }
 
+  useEffect(() => {
+    //call API
+
+    // console.log('Run use Effect');
+  }, []);//useEffect only run one time
+
   return (
-    <div className="App">
-      <Nav />
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <Router>
+      <div className="App">
+        <Nav />
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          {/* <Todo todos={todos.filter(item => item.status === true)} /> */}
 
-        <Todo
-          handleDeleteTodo={handleDeleteTodo}//pass props function to component child
-          todos={todos}//pass props data
-        />
+          <Switch>
+            <Route exact path="/">
+              <p>Home Page</p>
+            </Route>
+            <Route path="/todo">
+              <Todo
+                handleDeleteTodo={handleDeleteTodo}//pass props function to component child
+                todos={todos}//pass props data
+              />
+              <input
+                type="text" value={state.name} name='name'
+                onChange={(e) => handleInputChange(e)}
+              />
+              <button type="button" onClick={() => handleClick()}>Add todo</button>
+            </Route>
 
-        <Todo todos={todos.filter(item => item.status === true)} />
+            <Route path="/user" >
+              <User />
+            </Route>
 
-        <input
-          type="text" value={state.name} name='name'
-          onChange={(e) => handleInputChange(e)}
-        />
-        <button type="button" onClick={() => handleClick()}>Add todo</button>
-      </header>
-    </div>
+            <Route path="/about">
+              <p>About Page</p>
+            </Route>
+          </Switch>
+        </header>
+
+      </div>
+    </Router>
   );
 }
 
